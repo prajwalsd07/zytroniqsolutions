@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zytroniq IT Solutions – Bengaluru</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --white:#ffffff;--off:#f7f5f1;--sand:#e8e2d8;
+  --ink:#0f1923;--mid:#5a6a7a;--light:#8fa0b0;
+  --blue:#1a56db;--sky:#dbeafe;--amber:#d97706;
+  --border:rgba(15,25,35,0.09);
+  --shadow:0 2px 24px rgba(15,25,35,0.08);
+  --shadow-lg:0 8px 48px rgba(15,25,35,0.13);
+  --r:16px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--amber));z-index:3000;transition:width .1s;pointer-events:none;}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:2000;
+  padding:0 24px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:var(--shadow);}
+.nav-logo{
+  font-family:'Playfair Display',serif;font-weight:800;font-size:1.2rem;
+  color:var(--ink);text-decoration:none;letter-spacing:-.01em;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+
+/* Desktop links */
+.nav-links{display:none;gap:28px;list-style:none;}
+.nav-links a{color:var(--mid);font-size:.85rem;font-weight:500;text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-loc{
+  display:none;align-items:center;gap:6px;
+  font-size:.78rem;color:var(--mid);font-weight:500;
+  border:1px solid var(--border);padding:7px 14px;border-radius:100px;
+  background:var(--off);white-space:nowrap;
+}
+.nav-loc-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,.2);}
+
+/* Hamburger */
+.hamburger{
+  display:flex;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;background:none;border:none;cursor:pointer;padding:8px;
+  border-radius:8px;transition:background .2s;
+}
+.hamburger:hover{background:var(--off);}
+.hamburger span{display:block;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s,opacity .3s,width .3s;}
+.hamburger span:nth-child(2){width:75%;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;width:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Mobile drawer */
+.mobile-menu{
+  position:fixed;top:64px;left:0;width:100%;z-index:1900;
+  background:var(--white);border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-lg);
+  max-height:0;overflow:hidden;transition:max-height .35s ease;
+}
+.mobile-menu.open{max-height:400px;}
+.mobile-menu ul{list-style:none;padding:16px 0 24px;}
+.mobile-menu ul li a{
+  display:block;padding:14px 28px;font-size:1rem;font-weight:500;
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--border);transition:background .2s;
+}
+.mobile-menu ul li:last-child a{border-bottom:none;}
+.mobile-menu ul li a:active{background:var(--off);}
+.mobile-loc{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 28px;font-size:.85rem;color:var(--mid);font-weight:500;
+  border-top:1px solid var(--border);
+}
+
+@media(min-width:768px){
+  nav{padding:0 40px;height:70px;}
+  .hamburger{display:none;}
+  .nav-links{display:flex;}
+  .nav-loc{display:flex;}
+  .mobile-menu{display:none;}
+}
+@media(min-width:1024px){
+  nav{padding:0 64px;}
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:100px 24px 72px;text-align:center;
+  position:relative;overflow:hidden;
+  background:var(--off);
+}
+.hero-pattern{
+  position:absolute;inset:0;z-index:0;
+  background-image:radial-gradient(circle,rgba(26,86,219,.06) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 30%,transparent 100%);
+}
+.hero-blob1{position:absolute;width:min(700px,120vw);height:min(500px,80vw);border-radius:60% 40% 55% 45%;background:radial-gradient(ellipse,rgba(219,234,254,.6),transparent 70%);top:-60px;right:-80px;z-index:0;animation:blob-drift 12s ease-in-out infinite alternate;}
+.hero-blob2{position:absolute;width:min(500px,100vw);height:min(400px,70vw);border-radius:40% 60% 45% 55%;background:radial-gradient(ellipse,rgba(254,243,199,.5),transparent 70%);bottom:-40px;left:-60px;z-index:0;animation:blob-drift 16s ease-in-out infinite alternate-reverse;}
+@keyframes blob-drift{0%{transform:translate(0,0) rotate(0deg);}100%{transform:translate(20px,15px) rotate(6deg);}}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,9vw,6.5rem);
+  font-weight:800;line-height:1.08;letter-spacing:-.01em;
+  color:var(--ink);position:relative;z-index:1;
+  animation:fade-up .8s .05s ease forwards;opacity:0;
+}
+.hero h1 em{font-style:italic;color:var(--blue);}
+.hero h1 .stroke{-webkit-text-stroke:1.5px var(--ink);color:transparent;}
+.hero-sub{
+  max-width:540px;margin:18px auto 0;
+  font-size:clamp(.88rem,3.8vw,1.05rem);color:var(--mid);line-height:1.75;
+  position:relative;z-index:1;
+  animation:fade-up .8s .2s ease forwards;opacity:0;
+  padding:0 4px;
+}
+.hero-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:40px;width:100%;max-width:480px;
+  position:relative;z-index:1;
+  animation:fade-up .8s .35s ease forwards;opacity:0;
+}
+.hero-meta-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:.82rem;color:var(--mid);font-weight:500;
+  background:var(--white);border:1px solid var(--border);
+  padding:12px 14px;border-radius:12px;
+  box-shadow:var(--shadow);
+}
+.hero-meta-item strong{color:var(--ink);font-weight:600;}
+.hero-scroll{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--light);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  animation:fade-up .8s .55s ease forwards;opacity:0;z-index:1;
+}
+.scroll-bar{width:1px;height:36px;background:linear-gradient(to bottom,var(--blue),transparent);animation:scroll-anim 1.8s ease-in-out infinite;}
+@keyframes scroll-anim{0%,100%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}99%{transform:scaleY(0);transform-origin:bottom;}}
+@keyframes fade-up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}
+
+@media(min-width:600px){
+  .hero{padding:110px 40px 80px;}
+  .hero-meta{grid-template-columns:repeat(4,auto);max-width:none;gap:0;background:none;border:none;box-shadow:none;}
+  .hero-meta-item{background:none;border:none;box-shadow:none;padding:0 16px;}
+  .hero-meta-item:not(:last-child){border-right:1px solid var(--sand);}
+}
+
+/* ══════════════════════════════════════════
+   STATS
+══════════════════════════════════════════ */
+.stats-bar{
+  background:var(--ink);color:var(--white);
+  padding:40px 24px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:28px 16px;
+  text-align:center;
+}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--white);}
+.stat-num span{color:var(--amber);}
+.stat-lbl{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px;letter-spacing:.06em;text-transform:uppercase;}
+@media(min-width:600px){
+  .stats-bar{grid-template-columns:repeat(5,1fr);padding:48px 40px;}
+}
+@media(min-width:1024px){.stats-bar{padding:48px 64px;}}
+
+/* ══════════════════════════════════════════
+   SHARED SECTION ATOMS
+══════════════════════════════════════════ */
+.section-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:14px;
+}
+.section-tag::before{content:'';width:22px;height:1.5px;background:var(--blue);}
+.section-h{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5.5vw,3rem);font-weight:800;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
+.section-h .dim{color:var(--light);}
+.section-h em{font-style:italic;color:var(--blue);}
+.section-p{color:var(--mid);font-size:clamp(.88rem,3.5vw,.95rem);line-height:1.8;margin-top:12px;}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ══════════════════════════════════════════
+   SERVICES
+══════════════════════════════════════════ */
+.services{padding:72px 24px;background:var(--white);}
+.services-top{text-align:center;margin-bottom:48px;}
+.services-top .section-p{max-width:500px;margin:12px auto 0;}
+.services-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--sand);border:1px solid var(--sand);max-width:1160px;margin:0 auto;}
+.svc{
+  background:var(--white);padding:32px 24px;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(18px);
+  transition:opacity .55s ease,transform .55s ease,background .25s;
+}
+.svc.visible{opacity:1;transform:translateY(0);}
+.svc:hover{background:var(--off);}
+.svc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--amber));opacity:0;transition:opacity .3s;}
+.svc:hover::after{opacity:1;}
+.svc-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--sand);position:absolute;top:20px;right:22px;}
+.svc-icon{font-size:1.6rem;margin-bottom:16px;}
+.svc-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.svc-desc{font-size:.85rem;color:var(--mid);line-height:1.72;}
+.svc-link{display:inline-block;margin-top:16px;font-size:.8rem;font-weight:600;color:var(--blue);}
+@media(min-width:600px){.services-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:960px){.services-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:768px){.services{padding:96px 40px;}}
+@media(min-width:1024px){.services{padding:110px 64px;}}
+
+/* ══════════════════════════════════════════
+   FEATURE SPLIT
+══════════════════════════════════════════ */
+.feature{padding:72px 24px;background:var(--off);position:relative;overflow:hidden;}
+.feature-alt{background:var(--white);}
+.feature-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px;align-items:center;}
+.feature-text .section-p{max-width:100%;}
+.feature-checklist{margin-top:28px;list-style:none;display:flex;flex-direction:column;gap:11px;}
+.feature-checklist li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:clamp(.83rem,3.5vw,.875rem);color:var(--mid);line-height:1.65;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .5s ease,transform .5s ease,color .2s;
+}
+.feature-checklist li.visible{opacity:1;transform:translateY(0);}
+.feature-checklist li:hover{color:var(--ink);}
+.check{width:20px;height:20px;border-radius:50%;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--blue);flex-shrink:0;margin-top:1px;}
+.feature-vis{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.feature-vis.visible{opacity:1;transform:translateY(0)!important;}
+.vis-card{
+  border-radius:20px;padding:40px 28px;
+  background:var(--white);border:1px solid var(--border);
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.vis-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,86,219,.05) 1px,transparent 1px);background-size:22px 22px;}
+.vis-icon-wrap{width:88px;height:88px;border-radius:22px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:2.3rem;position:relative;z-index:1;margin-bottom:20px;box-shadow:0 4px 20px rgba(26,86,219,.12);animation:vis-float 4s ease-in-out infinite;}
+@keyframes vis-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.vis-label{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);position:relative;z-index:1;}
+.vis-sub{font-size:.78rem;color:var(--mid);margin-top:5px;position:relative;z-index:1;text-align:center;}
+.vis-badges{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;}
+.vis-badge{background:var(--off);border:1px solid var(--border);padding:5px 13px;border-radius:100px;font-size:.72rem;font-weight:600;color:var(--mid);}
+@media(min-width:768px){
+  .feature{padding:96px 40px;}
+  .feature-inner{grid-template-columns:1fr 1fr;gap:64px;}
+  .feature-inner.flip{direction:rtl;}
+  .feature-inner.flip>*{direction:ltr;}
+  .feature-vis:not(.visible){transform:translateX(28px);}
+  .feature-inner.flip .feature-vis:not(.visible){transform:translateX(-28px);}
+}
+@media(min-width:1024px){.feature{padding:110px 64px;}.feature-inner{gap:80px;}}
+
+/* ══════════════════════════════════════════
+   TECH TICKER
+══════════════════════════════════════════ */
+.tech{padding:64px 0;background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.tech-head{text-align:center;margin-bottom:40px;padding:0 24px;}
+.tech-track-wrap{overflow:hidden;position:relative;}
+.tech-track-wrap::before,.tech-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
+.tech-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent);}
+.tech-track-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent);}
+.tech-track{display:flex;gap:12px;width:max-content;animation:scroll-tech 28s linear infinite;}
+.tech-track:hover{animation-play-state:paused;}
+@keyframes scroll-tech{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.tech-pill{display:flex;align-items:center;gap:8px;background:var(--off);border:1px solid var(--border);padding:12px 20px;border-radius:100px;white-space:nowrap;font-size:.82rem;font-weight:500;color:var(--mid);transition:border-color .2s,color .2s,background .2s;}
+.tech-pill:hover{border-color:rgba(26,86,219,.3);color:var(--ink);background:var(--sky);}
+@media(min-width:768px){.tech{padding:80px 0;}.tech-track-wrap::before,.tech-track-wrap::after{width:140px;}}
+
+/* ══════════════════════════════════════════
+   GLOBAL
+══════════════════════════════════════════ */
+.global{padding:72px 24px;background:var(--ink);color:var(--white);text-align:center;position:relative;overflow:hidden;}
+.global::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.025) 1px,transparent 1px);background-size:36px 36px;}
+.global .section-tag{color:var(--amber);justify-content:center;}
+.global .section-tag::before{background:var(--amber);}
+.global .section-h{color:var(--white);}
+.global .section-h .dim{color:rgba(255,255,255,.3);}
+.global .section-p{color:rgba(255,255,255,.55);max-width:420px;margin:12px auto 0;}
+.globe-wrap{width:min(280px,70vw);height:min(280px,70vw);border-radius:50%;margin:48px auto;background:radial-gradient(circle at 38% 38%,rgba(26,86,219,.4),rgba(255,255,255,.02) 60%,transparent);border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;box-shadow:0 0 60px rgba(26,86,219,.2);}
+.g-line{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.07);transform-origin:center;}
+.g-lat{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.07);}
+.g-dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:g-blink 2s infinite;}
+@keyframes g-blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+.g-label{position:absolute;bottom:16px;width:100%;text-align:center;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.regions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:36px;}
+.region{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:10px 18px;border-radius:100px;font-size:.82rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:7px;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease,background .2s;}
+.region.visible{opacity:1;transform:translateY(0);}
+.region:hover{background:rgba(255,255,255,.1);color:var(--white);}
+@media(min-width:768px){.global{padding:96px 40px;}}
+@media(min-width:1024px){.global{padding:110px 64px;}}
+
+/* ══════════════════════════════════════════
+   FOUNDERS
+══════════════════════════════════════════ */
+.founders{padding:72px 24px;background:var(--white);}
+.founders-top{text-align:center;margin-bottom:48px;}
+.founders-top .section-p{max-width:460px;margin:12px auto 0;}
+.founders-row{display:grid;grid-template-columns:1fr;gap:20px;max-width:960px;margin:0 auto;}
+.f-card{border:1px solid var(--border);border-radius:20px;overflow:hidden;background:var(--white);box-shadow:var(--shadow);opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease,box-shadow .3s;}
+.f-card.visible{opacity:1;transform:translateY(0);}
+.f-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)!important;}
+.f-card-top{height:100px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--sky),rgba(254,243,199,.6));display:flex;align-items:center;justify-content:center;}
+.f-card-top::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,86,219,.07) 1px,transparent 1px);background-size:18px 18px;}
+.f-avatar{width:64px;height:64px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;border:3px solid var(--white);box-shadow:0 4px 14px rgba(26,86,219,.2);position:relative;z-index:1;}
+.f-body{padding:22px 24px 28px;}
+.f-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.f-role{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.f-bio{font-size:.84rem;color:var(--mid);line-height:1.7;}
+@media(min-width:600px){.founders-row{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:768px){.founders{padding:96px 40px;}}
+@media(min-width:1024px){.founders{padding:110px 64px;}}
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
+.contact{padding:72px 24px;background:var(--off);}
+.contact-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px;}
+.contact-left .section-h{margin-top:8px;}
+.contact-left .section-p{max-width:100%;}
+.c-items{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
+.c-item{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--border);padding:16px 20px;border-radius:14px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:box-shadow .25s,transform .25s,border-color .25s;}
+.c-item:hover{box-shadow:var(--shadow-lg);transform:translateX(4px);border-color:rgba(26,86,219,.2);}
+.c-icon{width:42px;height:42px;border-radius:11px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;}
+.c-lbl{font-size:.68rem;color:var(--light);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;}
+.c-val{font-size:.88rem;font-weight:500;color:var(--ink);word-break:break-all;}
+.contact-right{display:flex;flex-direction:column;gap:12px;}
+.form-row{display:grid;grid-template-columns:1fr;gap:12px;}
+.f-inp{width:100%;background:var(--white);border:1px solid var(--border);color:var(--ink);padding:14px 16px;border-radius:11px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow);}
+.f-inp::placeholder{color:var(--light);}
+.f-inp:focus{border-color:rgba(26,86,219,.4);box-shadow:0 0 0 3px rgba(26,86,219,.08);}
+textarea.f-inp{min-height:110px;resize:vertical;}
+.f-select{width:100%;background:var(--white);border:1px solid var(--border);color:var(--mid);padding:14px 16px;border-radius:11px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;outline:none;appearance:none;transition:border-color .2s;box-shadow:var(--shadow);cursor:pointer;}
+.f-select:focus{border-color:rgba(26,86,219,.4);}
+.btn-send{width:100%;background:var(--ink);color:var(--white);border:none;padding:16px 28px;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;transition:background .25s,transform .2s,box-shadow .25s;box-shadow:0 4px 18px rgba(15,25,35,.2);}
+.btn-send:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,86,219,.3);}
+.btn-send:active{transform:translateY(0);}
+@media(min-width:500px){.form-row{grid-template-columns:1fr 1fr;}.btn-send{width:auto;}}
+@media(min-width:768px){.contact{padding:96px 40px;}}
+@media(min-width:900px){.contact-inner{grid-template-columns:1fr 1fr;gap:64px;}}
+@media(min-width:1024px){.contact{padding:110px 64px;}.contact-inner{gap:80px;}}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer{padding:36px 24px;background:var(--ink);display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}
+.ft-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--white);}
+.ft-logo span{color:var(--amber);}
+.ft-copy{font-size:.75rem;color:rgba(255,255,255,.3);}
+.ft-links{display:flex;gap:24px;list-style:none;flex-wrap:wrap;justify-content:center;}
+.ft-links a{color:rgba(255,255,255,.4);font-size:.78rem;text-decoration:none;transition:color .2s;}
+.ft-links a:hover{color:var(--white);}
+@media(min-width:640px){
+  footer{flex-direction:row;justify-content:space-between;text-align:left;padding:40px 40px;}
+}
+@media(min-width:1024px){footer{padding:44px 64px;}}
+/* ══════════════════════════════════════════
+   MOBILE TYPOGRAPHY OVERRIDES (<480px)
+══════════════════════════════════════════ */
+@media(max-width:480px){
+  .hero{padding:88px 20px 68px;min-height:100svh;}
+  .hero h1{font-size:clamp(2rem,11vw,2.6rem);letter-spacing:0em;line-height:1.1;}
+  .hero h1 .stroke{-webkit-text-stroke:1px var(--ink);}
+  .hero-sub{font-size:.9rem;margin-top:16px;line-height:1.7;}
+  .hero-meta{gap:10px;margin-top:28px;}
+  .hero-meta-item{font-size:.78rem;padding:10px 12px;gap:8px;}
+  .hero-scroll{display:none;}
+
+  .stats-bar{padding:32px 20px;gap:20px 12px;}
+  .stat-num{font-size:1.9rem;}
+  .stat-lbl{font-size:.68rem;}
+
+  .services{padding:56px 16px;}
+  .services-top{margin-bottom:36px;}
+  .section-h{font-size:1.55rem;letter-spacing:0em;}
+  .section-p{font-size:.875rem;}
+  .svc{padding:28px 20px;}
+  .svc-title{font-size:1rem;}
+  .svc-desc{font-size:.83rem;}
+
+  .feature{padding:56px 16px;}
+  .feature-text h2{font-size:1.55rem;}
+  .feature-checklist li{font-size:.83rem;}
+  .vis-card{padding:32px 20px;min-height:240px;}
+  .vis-icon-wrap{width:72px;height:72px;font-size:2rem;}
+
+  .tech{padding:48px 0;}
+  .tech-pill{padding:10px 16px;font-size:.78rem;}
+
+  .global{padding:56px 16px;}
+  .globe-wrap{width:min(240px,72vw);height:min(240px,72vw);margin:36px auto;}
+  .regions{gap:8px;}
+  .region{padding:9px 14px;font-size:.76rem;}
+
+  .founders{padding:56px 16px;}
+  .f-name{font-size:1rem;}
+  .f-bio{font-size:.82rem;}
+
+  .contact{padding:56px 16px;}
+  .c-val{font-size:.84rem;}
+  .f-inp,.f-select{padding:13px 14px;font-size:.85rem;}
+  .btn-send{padding:15px 24px;font-size:.88rem;}
+
+  footer{padding:28px 16px;}
+  .ft-links{gap:18px;}
+}
+</style>
+</head>
+<body>
+
+<div id="prog" style="width:0%"></div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a class="nav-logo" href="#"><span class="nav-dot"></span>Zytroniq</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#solutions">Solutions</a></li>
+    <li><a href="#global">Global</a></li>
+    <li><a href="#founders">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-loc"><span class="nav-loc-dot"></span>Bengaluru, India</div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#services" class="menu-link">Services</a></li>
+    <li><a href="#solutions" class="menu-link">Solutions</a></li>
+    <li><a href="#global" class="menu-link">Global</a></li>
+    <li><a href="#founders" class="menu-link">Team</a></li>
+    <li><a href="#contact" class="menu-link">Contact</a></li>
+  </ul>
+  <div class="mobile-loc"><span class="nav-loc-dot"></span>&nbsp;Bengaluru, Karnataka, India</div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-pattern"></div>
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+  <h1>Smart IT <em>Solutions</em><br/>for the <span class="stroke">World</span></h1>
+  <p class="hero-sub">We build ERP systems, enterprise software, and digital platforms that help small and medium businesses grow — across India and globally.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">🏗️ <strong>ERP Systems</strong></div>
+    <div class="hero-meta-item">🌐 <strong>Web Apps</strong></div>
+    <div class="hero-meta-item">☁️ <strong>Cloud</strong></div>
+    <div class="hero-meta-item">📱 <strong>Mobile</strong></div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">50<span>+</span></div><div class="stat-lbl">Projects Delivered</div></div>
+  <div class="stat-item"><div class="stat-num"><span>∞</span></div><div class="stat-lbl">Global Reach</div></div>
+  <div class="stat-item"><div class="stat-num">ERP</div><div class="stat-lbl">Core Specialization</div></div>
+  <div class="stat-item"><div class="stat-num">24<span>/7</span></div><div class="stat-lbl">Support</div></div>
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-lbl">Expert Founders</div></div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section class="services" id="services">
+  <div class="services-top reveal">
+    <div class="section-tag">What We Build</div>
+    <h2 class="section-h">Solutions That <em>Scale</em><br/><span class="dim">With Your Business</span></h2>
+    <p class="section-p">From custom ERP to full-stack web applications — Zytroniq delivers technology that works in the real world.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc"><div class="svc-num">01</div><div class="svc-icon">🏗️</div><div class="svc-title">ERP Systems</div><div class="svc-desc">Custom enterprise resource planning — inventory, HR, finance, and supply chain integrated into one seamless platform built around how you work.</div><div class="svc-link">Learn more →</div></div>
+    <div class="svc"><div class="svc-num">02</div><div class="svc-icon">🌐</div><div class="svc-title">Web Applications</div><div class="svc-desc">Modern, responsive web apps and information portals. From company websites to complex customer-facing platforms with real-time data.</div><div class="svc-link">Learn more →</div></div>
+    <div class="svc"><div class="svc-num">03</div><div class="svc-icon">📱</div><div class="svc-title">Mobile Applications</div><div class="svc-desc">iOS and Android apps that extend your business to mobile — intuitive, fast, and deeply integrated with your existing backend systems.</div><div class="svc-link">Learn more →</div></div>
+    <div class="svc"><div class="svc-num">04</div><div class="svc-icon">☁️</div><div class="svc-title">Cloud Infrastructure</div><div class="svc-desc">Cloud migration, architecture, and managed services on AWS, Azure, and GCP — scalable, secure, and built for growth.</div><div class="svc-link">Learn more →</div></div>
+    <div class="svc"><div class="svc-num">05</div><div class="svc-icon">🔗</div><div class="svc-title">System Integration</div><div class="svc-desc">Connect disparate tools, APIs, and platforms into a unified ecosystem with seamless data flows, automation, and real-time sync.</div><div class="svc-link">Learn more →</div></div>
+    <div class="svc"><div class="svc-num">06</div><div class="svc-icon">🛡️</div><div class="svc-title">IT Consulting</div><div class="svc-desc">Strategic technology advisory for SMBs — digital transformation roadmaps, tech stack selection, and implementation planning.</div><div class="svc-link">Learn more →</div></div>
+  </div>
+</section>
+
+<!-- ── FEATURE 1 ── -->
+<section class="feature" id="solutions">
+  <div class="feature-inner">
+    <div class="feature-text">
+      <div class="section-tag">ERP Expertise</div>
+      <h2 class="section-h">Built for SMBs.<br/>Designed to <em>grow.</em></h2>
+      <p class="section-p">We specialize in helping small and medium businesses implement ERP systems that fit how they actually work — not a generic template.</p>
+      <ul class="feature-checklist">
+        <li><span class="check">✓</span>Fully custom ERP or modular implementation</li>
+        <li><span class="check">✓</span>Integration with your existing databases and tools</li>
+        <li><span class="check">✓</span>Team training and smooth onboarding support</li>
+        <li><span class="check">✓</span>Ongoing maintenance and feature upgrades</li>
+        <li><span class="check">✓</span>Multi-location and multi-currency support</li>
+      </ul>
+    </div>
+    <div class="feature-vis">
+      <div class="vis-card">
+        <div class="vis-dots"></div>
+        <div class="vis-icon-wrap">⚙️</div>
+        <div class="vis-label">ERP Platform</div>
+        <div class="vis-sub">Enterprise Resource Planning</div>
+        <div class="vis-badges">
+          <span class="vis-badge">Inventory</span>
+          <span class="vis-badge">HR</span>
+          <span class="vis-badge">Finance</span>
+          <span class="vis-badge">Supply Chain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURE 2 ── -->
+<section class="feature feature-alt">
+  <div class="feature-inner flip">
+    <div class="feature-text">
+      <div class="section-tag">Global Delivery</div>
+      <h2 class="section-h">India-based.<br/><em>Globally</em> delivered.</h2>
+      <p class="section-p">From our base in Bengaluru, we serve clients across India, Europe, Southeast Asia, and beyond — with transparent, milestone-based delivery.</p>
+      <ul class="feature-checklist">
+        <li><span class="check">✓</span>Remote-first delivery model</li>
+        <li><span class="check">✓</span>Time-zone friendly collaboration</li>
+        <li><span class="check">✓</span>Transparent milestone-based pricing</li>
+        <li><span class="check">✓</span>Dedicated project manager for every project</li>
+        <li><span class="check">✓</span>Post-launch support and SLA options</li>
+      </ul>
+    </div>
+    <div class="feature-vis">
+      <div class="vis-card">
+        <div class="vis-dots"></div>
+        <div class="vis-icon-wrap" style="animation-delay:.5s">🌍</div>
+        <div class="vis-label">Global Delivery</div>
+        <div class="vis-sub">From Bengaluru to the World</div>
+        <div class="vis-badges">
+          <span class="vis-badge">🇮🇳 India</span>
+          <span class="vis-badge">🇪🇺 Europe</span>
+          <span class="vis-badge">🇺🇸 Americas</span>
+          <span class="vis-badge">🇸🇬 Asia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECH ── -->
+<section class="tech">
+  <div class="tech-head reveal">
+    <div class="section-tag" style="justify-content:center;display:flex;">Technologies</div>
+    <h2 class="section-h" style="text-align:center;">Built with the <em>Best</em> <span class="dim">Stack</span></h2>
+  </div>
+  <div class="tech-track-wrap">
+    <div class="tech-track">
+      <div class="tech-pill">⚛️ React</div><div class="tech-pill">🟩 Node.js</div>
+      <div class="tech-pill">🐍 Python</div><div class="tech-pill">🐘 PostgreSQL</div>
+      <div class="tech-pill">☁️ AWS</div><div class="tech-pill">🔷 Azure</div>
+      <div class="tech-pill">🐳 Docker</div><div class="tech-pill">☸️ Kubernetes</div>
+      <div class="tech-pill">🔥 Firebase</div><div class="tech-pill">📱 React Native</div>
+      <div class="tech-pill">🍃 MongoDB</div><div class="tech-pill">⚡ Next.js</div>
+      <div class="tech-pill">🗂️ MySQL</div><div class="tech-pill">🔴 Redis</div>
+      <!-- duplicate for loop -->
+      <div class="tech-pill">⚛️ React</div><div class="tech-pill">🟩 Node.js</div>
+      <div class="tech-pill">🐍 Python</div><div class="tech-pill">🐘 PostgreSQL</div>
+      <div class="tech-pill">☁️ AWS</div><div class="tech-pill">🔷 Azure</div>
+      <div class="tech-pill">🐳 Docker</div><div class="tech-pill">☸️ Kubernetes</div>
+      <div class="tech-pill">🔥 Firebase</div><div class="tech-pill">📱 React Native</div>
+      <div class="tech-pill">🍃 MongoDB</div><div class="tech-pill">⚡ Next.js</div>
+      <div class="tech-pill">🗂️ MySQL</div><div class="tech-pill">🔴 Redis</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GLOBAL ── -->
+<section class="global" id="global">
+  <div class="section-tag reveal" style="justify-content:center;display:flex;">Our Reach</div>
+  <h2 class="section-h reveal">Serving Clients <span class="dim">Worldwide</span></h2>
+  <p class="section-p reveal">From our Bengaluru headquarters, Zytroniq delivers IT solutions to businesses across the globe.</p>
+  <div class="globe-wrap"><div id="globe-inner"></div><div class="g-label">Zytroniq · Bengaluru</div></div>
+  <div class="regions" id="regions">
+    <div class="region">🇮🇳 India — HQ</div>
+    <div class="region">🇪🇺 Europe</div>
+    <div class="region">🇺🇸 Americas</div>
+    <div class="region">🇸🇬 SE Asia</div>
+    <div class="region">🇦🇺 Australia</div>
+    <div class="region">🌍 Middle East</div>
+  </div>
+</section>
+
+<!-- ── FOUNDERS ── -->
+<section class="founders" id="founders">
+  <div class="founders-top reveal">
+    <div class="section-tag" style="justify-content:center;display:flex;">The Team</div>
+    <h2 class="section-h">Meet the <em>Founders</em></h2>
+    <p class="section-p">The people who built Zytroniq — and who show up every day to make it better.</p>
+  </div>
+  <div class="founders-row">
+    <div class="f-card">
+      <div class="f-card-top"><div class="f-avatar">PS</div></div>
+      <div class="f-body"><div class="f-name">Prajwal S D</div><div class="f-role">Co-Founder</div><div class="f-bio">Driving the vision and technical strategy of Zytroniq — with a passion for building software that genuinely transforms how businesses operate.</div></div>
+    </div>
+    <div class="f-card">
+      <div class="f-card-top" style="background:linear-gradient(135deg,rgba(254,243,199,.8),rgba(219,234,254,.5));"><div class="f-avatar" style="background:var(--amber)">RG</div></div>
+      <div class="f-body"><div class="f-name">Ritwik G D</div><div class="f-role">Co-Founder</div><div class="f-bio">Leading product development and client relationships — ensuring every solution we build is designed to last, and built to scale with your ambitions.</div></div>
+    </div>
+    <div class="f-card">
+      <div class="f-card-top" style="background:linear-gradient(135deg,rgba(220,252,231,.8),rgba(219,234,254,.5));"><div class="f-avatar" style="background:#059669">MJ</div></div>
+      <div class="f-body"><div class="f-name">Manjunath</div><div class="f-role">Co-Founder</div><div class="f-bio">Architecting the technical backbone of every Zytroniq platform — with deep expertise in cloud infrastructure, systems design, and enterprise engineering.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-h">Let's build something<br/><em>great together.</em></h2>
+      <p class="section-p">Have a project in mind? Drop us a message and our team in Bengaluru will respond within 24 hours.</p>
+      <div class="c-items">
+        <a class="c-item" href="mailto:zytroniqsolutions@gmail.com">
+          <div class="c-icon">✉️</div>
+          <div><div class="c-lbl">Email</div><div class="c-val">zytroniqsolutions@gmail.com</div></div>
+        </a>
+        <a class="c-item" href="tel:+917899707070">
+          <div class="c-icon">📞</div>
+          <div><div class="c-lbl">Phone</div><div class="c-val">+91 78997 07070</div></div>
+        </a>
+        <div class="c-item" style="cursor:default;">
+          <div class="c-icon">📍</div>
+          <div><div class="c-lbl">Headquarters</div><div class="c-val">Bengaluru, Karnataka, India</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="d34938ab-3d13-4057-8d0c-a94fa8e1d568"/>
+        <input type="hidden" name="subject" value="New Enquiry – Zytroniq IT Solutions"/>
+        <input type="hidden" name="from_name" value="Zytroniq Website"/>
+        <input type="checkbox" name="botcheck" style="display:none"/>
+        <div class="form-row" style="margin-bottom:12px">
+          <input class="f-inp" type="text" name="name" placeholder="Your Name" required/>
+          <input class="f-inp" type="email" name="email" placeholder="Email Address" required/>
+        </div>
+        <input class="f-inp" type="text" name="company" placeholder="Company Name (optional)" style="margin-bottom:12px;display:block;width:100%"/>
+        <input class="f-inp" type="tel" name="phone" placeholder="Phone Number" style="margin-bottom:12px;display:block;width:100%"/>
+        <select class="f-select" name="service" required style="margin-bottom:12px;display:block;width:100%">
+          <option value="" disabled selected>Select a Service</option>
+          <option>ERP System</option><option>Web Application</option>
+          <option>Mobile App</option><option>Cloud Infrastructure</option>
+          <option>System Integration</option><option>IT Consulting</option><option>Other</option>
+        </select>
+        <textarea class="f-inp" name="message" placeholder="Tell us about your project…" style="margin-bottom:12px;display:block;width:100%" required></textarea>
+        <button type="submit" class="btn-send" id="submitBtn">Send Message →</button>
+        <div id="formSuccess" style="display:none;margin-top:14px;padding:14px 18px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;color:#15803d;font-size:.85rem;font-weight:500;">✓ Message sent! We'll get back to you within 24 hours.</div>
+        <div id="formError" style="display:none;margin-top:14px;padding:14px 18px;background:#fef2f2;border:1px solid #fecaca;border-radius:12px;color:#dc2626;font-size:.85rem;">⚠ Something went wrong. Please email us at zytroniqsolutions@gmail.com</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-logo">Zytroniq <span>IT Solutions</span></div>
+  <span class="ft-copy">© 2025 Zytroniq IT Solutions Pvt. Ltd. · Bengaluru, India</span>
+  <ul class="ft-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#founders">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+// ── PROGRESS ────────────────────────────────────
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';},{passive:true});
+
+// ── NAV SCROLL ──────────────────────────────────
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+// ── HAMBURGER ───────────────────────────────────
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}));
+// Close menu on outside tap
+document.addEventListener('click',e=>{
+  if(!navEl.contains(e.target)&&!mobileMenu.contains(e.target)){
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+});
+
+// ── INTERSECTION REVEAL ─────────────────────────
+const isMobile = window.innerWidth < 768;
+const obs=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold: isMobile ? 0.05 : 0.1, rootMargin: isMobile ? '0px 0px -40px 0px' : '0px 0px -60px 0px'});
+document.querySelectorAll('.reveal,.svc,.feature-checklist li,.feature-vis,.f-card,.region').forEach(el=>obs.observe(el));
+// Stagger delays — shorter on mobile to feel snappier
+const staggerBase = isMobile ? 0.05 : 0.07;
+document.querySelectorAll('.svc').forEach((el,i)=>el.style.transitionDelay=`${i*staggerBase}s`);
+document.querySelectorAll('.feature-checklist li').forEach((el,i)=>el.style.transitionDelay=`${i*(isMobile?0.07:0.1)}s`);
+document.querySelectorAll('.f-card').forEach((el,i)=>el.style.transitionDelay=`${i*(isMobile?0.08:0.14)}s`);
+document.querySelectorAll('.region').forEach((el,i)=>el.style.transitionDelay=`${i*0.06}s`);
+
+// ── PARALLAX (desktop only) ──────────────────────
+if(window.innerWidth>=768){
+  window.addEventListener('scroll',()=>{
+    const hp=document.querySelector('.hero-pattern');
+    if(hp)hp.style.transform=`translateY(${scrollY*.2}px)`;
+  },{passive:true});
+}
+
+// ── GLOBE BUILD ─────────────────────────────────
+const gi=document.getElementById('globe-inner');
+for(let i=0;i<8;i++){const l=document.createElement('div');l.className='g-line';l.style.transform=`rotate(${i*22.5}deg)`;gi.appendChild(l);}
+for(let i=0;i<5;i++){const l=document.createElement('div');l.className='g-lat';l.style.top=`${14+i*18}%`;gi.appendChild(l);}
+[{t:'32%',l:'42%',d:'0s'},{t:'54%',l:'64%',d:'.4s'},{t:'46%',l:'26%',d:'.7s'},{t:'62%',l:'52%',d:'1s'},{t:'28%',l:'60%',d:'1.3s'},{t:'50%',l:'45%',d:'.2s'}].forEach(p=>{
+  const d=document.createElement('div');d.className='g-dot';d.style.top=p.t;d.style.left=p.l;d.style.animationDelay=p.d;gi.appendChild(d);
+});
+
+// ── FORM ────────────────────────────────────────
+const contactForm=document.getElementById('contactForm');
+const submitBtn=document.getElementById('submitBtn');
+const formSuccess=document.getElementById('formSuccess');
+const formError=document.getElementById('formError');
+contactForm.addEventListener('submit',async function(e){
+  e.preventDefault();
+  submitBtn.textContent='Sending…';submitBtn.disabled=true;
+  formSuccess.style.display='none';formError.style.display='none';
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(contactForm)});
+    const json=await res.json();
+    if(json.success){formSuccess.style.display='block';contactForm.reset();}
+    else throw new Error();
+  }catch{formError.style.display='block';}
+  submitBtn.textContent='Send Message →';submitBtn.disabled=false;
+});
+</script>
+</body>
+</html>
